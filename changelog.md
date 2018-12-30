@@ -1,7 +1,37 @@
 # ChangeLog
 
+## Version 5.2.27 (November 15th 2018)
+* **SECURITY** Fix potential object injection vulnerability. Reported by Sehun Oh of cyberone.kr.
+* Note that **the 5.2 branch is now deprecated** and will not receive security updates after 31st December 2018.
+
+## Version 5.2.26 (November 4th 2017)
+* Minor security backport from 6.0 - set Debugoutput in constructor according to SAPI in use, avoiding potential XSS in default debug output.
+
+## Version 5.2.25 (August 28th 2017)
+* Make obtaining SMTP transaction ID more reliable
+* Add Bosnian translation
+* This is the last official release in the legacy PHPMailer 5.2 series; there may be future security patches (which will be found in the [5.2-stable branch](https://github.com/PHPMailer/PHPMailer/tree/5.2-stable)), but no further non-security PRs or issues will be accepted. Migrate to PHPMailer 6.0.
+
+## Version 5.2.24 (July 26th 2017)
+* **SECURITY** Fix XSS vulnerability in one of the code examples, [CVE-2017-11503](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-11503). The `code_generator.phps` example did not filter user input prior to output. This file is distributed with a `.phps` extension, so it it not normally executable unless it is explicitly renamed, so it is safe by default. There was also an undisclosed potential XSS vulnerability in the default exception handler (unused by default). Patches for both issues kindly provided by Patrick Monnerat of the Fedora Project.
+* Handle bare codes (an RFC contravention) in SMTP server responses
+* Make message timestamps more dynamic - calculate the date separately for each message
+* Include timestamps in HTML-format debug output
+* Improve Turkish, Norwegian, Serbian, Brazilian Portuguese & simplified Chinese translations
+* Correction of Serbian ISO language code from `sr` to `rs`
+* Fix matching of multiple entries in `Host` to match IPv6 literals without breaking port selection (see #1094, caused by a3b4f6b)
+* Better capture and reporting of SMTP connection errors
+
+## Version 5.2.23 (March 15th 2017)
+* Improve trapping of TLS errors during connection so that they don't cause warnings, and are reported better in debug output
+* Amend test suite so it uses PHPUnit version 4.8, compatible with older versions of PHP, instead of the version supplied by Travis-CI
+* This forces pinning of some dev packages to older releases, but should make travis builds more reliable
+* Test suite now runs on HHVM, and thus so should PHPMailer in general
+* Improve Czech translations
+* Add links to CVE-2017-5223 resources
+
 ## Version 5.2.22 (January 5th 2017)
-* **SECURITY** Fix [CVE-2017-5223](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-5223), local file disclosure vulnerability if content passed to `msgHTML()` is sourced from unfiltered user input. Reported by Yongxiang Li of Asiasecurity.
+* **SECURITY** Fix [CVE-2017-5223](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-5223), local file disclosure vulnerability if content passed to `msgHTML()` is sourced from unfiltered user input. Reported by Yongxiang Li of Asiasecurity. The fix for this means that calls to `msgHTML()` without a `$basedir` will not import images with relative URLs, and relative URLs containing `..` will be ignored.
 * Add simple contact form example
 * Emoji in test content
 
